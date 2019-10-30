@@ -1,0 +1,17 @@
+[package]
+name = "rschat"
+version = "0.1.0"
+authors = ["Aramis Razzaghipour <aramisnoah@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow = "1.0"
+colored = "1.8"
+get_if_addrs = "0.5"
+log = { version = "0.4", features = ["release_max_level_info"] }
+rand = "0.7"
+rmps = { version = "0.14", package = "rmp-serde" }
+serde = { version = "1.0", features = ["derive"] }
+simple_logger = "1.3"
