@@ -57,7 +57,7 @@ async fn handle_connection(
     mut viewers: &mut Vec<Viewer>,
     mut senders: &mut Vec<Sender>,
 ) -> Result<()> {
-    use anyhow::anyhow;
+    use anyhow::Context;
     use log::debug;
     use rschat::Communication;
 
@@ -66,12 +66,8 @@ async fn handle_connection(
     let mut msg = Vec::new();
     stream.read_to_end(&mut msg).await?;
 
-    let communication: Communication = match rmps::from_read_ref(&msg) {
-        Ok(msg) => msg,
-        Err(e) => {
-            return Err(anyhow!("Error deserialising message: {}", e));
-        }
-    };
+    let communication: Communication = rmps::from_read_ref(&msg)
+        .with_context(|| format!("error deserialising message: {:?}", msg))?;
 
     communication.handle(&mut viewers, &mut senders)?;
 
